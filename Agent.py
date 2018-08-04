@@ -1,22 +1,23 @@
 from Pose import Pose
+import Errors as ERR
 import numpy as np
 
 class Agent:
-  def __init__(self, id, startingPose=False, collisionRadius=0.15):
-    assert startingPose == False or isinstance(startingPose, Pose)
+  def __init__(self, id, pose=Pose(), defaultPose=False, collisionRadius=0.15):
+    assert defaultPose == False or isinstance(defaultPose, Pose), ERR.TYPE_MISMATCH(defaultPose, Pose)
     self.type           = "AGENT"
     self.id             = id
-    self.pose           = Pose()
-    self.startingPose   = startingPose if startingPose else Pose()
+    self.pose           = pose
+    self.defaultPose    = defaultPose if defaultPose else Pose()
     self.collsionRadius = collisionRadius
 
   def reset(self, pose=False):
     self.prevActions    = []
     self.trajectory     = []
     assert pose == False or isinstance(pose, Pose), ERR.BAD_RESET_POSE(pose)
-    self.pose = pose if pose else self.startingPose
+    self.pose = pose if pose else self.defaultPose
     
-  def step(self, action, dt=0.01):
+  def step(self, action=[0,0], dt=0.01):
     self.trajectory.append(self.pose)
     self.pose.updateHolonomic(action, dt)
 
@@ -27,8 +28,8 @@ class Agent:
     return True
 
   def __str__(self):
-    info = "{} {}:\n-Pose: {}\n-Starting Pose: {}\n-Collision Radius: {}\n-Edge Networks: {}".\
-            format(self.type, self.id, self.pose, self.startingPose, self.collsionRadius, self.edgeNetworks)
+    info = "{} {}:\n-Pose: {}\n-Default Pose: {}\n-Collision Radius: {}\n".\
+            format(self.type, self.id, self.pose, self.defaultPose, self.collsionRadius)
     return info+"\n"+"-"*10
 
   def __repr__(self):
