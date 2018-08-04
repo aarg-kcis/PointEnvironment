@@ -14,10 +14,8 @@ class Pose(object):
     self.y      = y
     self.theta  = wrap_angle(t)
 
-  def updateHolonomic(self, action, iterations, dt):
-    action = np.matrix(action, 'f')
-    for i in xrange(iterations):
-      self += (action * dt * Pose.M(self.theta))
+  def updateHolonomic(self, action, dt):
+    self += (action * dt * Pose.M(self.theta))
       
   def __add__(self, other):
     if isinstance(other, Pose):
@@ -33,10 +31,10 @@ class Pose(object):
     return Pose(x, y, theta)
 
   def __sub__(self, other):
-    x = self.x - other.x
-    y = self.y - other.y
-    theta = wrap_angle(self.theta - other.theta)
-    return [x, y, theta]
+    dx = self.x - other.x
+    dy = self.y - other.y
+    dtheta = wrap_angle(self.theta - other.theta)
+    return np.matrix([dx, dy, dtheta])
 
   def __iter__(self):
     return iter([self.x, self.y, self.theta])

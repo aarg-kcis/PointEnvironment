@@ -1,30 +1,31 @@
 from Pose import Pose
 import Errors as ERR
 import numpy as np
+from collections import deque
 
 class Agent:
-  def __init__(self, id, pose=Pose(), defaultPose=False, collisionRadius=0.15):
+  def __init__(self, id, pose=Pose(), defaultPose=False, collisionRadius=0.15, lenTrajectory=100):
     assert defaultPose == False or isinstance(defaultPose, Pose), ERR.TYPE_MISMATCH(defaultPose, Pose)
     self.type           = "AGENT"
     self.id             = id
     self.pose           = pose
     self.defaultPose    = defaultPose if defaultPose else Pose()
     self.collsionRadius = collisionRadius
+    self.lenTrajectory  = lenTrajectory
 
   def reset(self, pose=False):
     self.prevActions    = []
-    self.trajectory     = []
+    self.trajectory     = deque(maxlen=self.lenTrajectory)
     assert pose == False or isinstance(pose, Pose), ERR.BAD_RESET_POSE(pose)
     self.pose = pose if pose else self.defaultPose
     
-  def step(self, action=[0,0], dt=0.01):
-    if action == [0,0]:
-      return
-    self.pose.updateHolonomic(action, dt)
+  def step(self, action, dt=0.01):
+    if action.any():
+      self.pose.updateHolonomic(action, dt)
 
   def updateTrajectory(self):
     self.trajectory.append(self.pose)
-    
+
   def isUnique(self, agents):
     for i in agents:
       if i.id == self.id:
