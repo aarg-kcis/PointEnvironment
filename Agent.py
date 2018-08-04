@@ -18,9 +18,13 @@ class Agent:
     self.pose = pose if pose else self.defaultPose
     
   def step(self, action=[0,0], dt=0.01):
-    self.trajectory.append(self.pose)
+    if action == [0,0]:
+      return
     self.pose.updateHolonomic(action, dt)
 
+  def updateTrajectory(self):
+    self.trajectory.append(self.pose)
+    
   def isUnique(self, agents):
     for i in agents:
       if i.id == self.id:
