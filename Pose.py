@@ -1,4 +1,5 @@
 import numpy as np
+import Errors as ERR
 from Utils import wrap_angle
 
 class Pose(object):
@@ -45,12 +46,12 @@ class Pose(object):
       self.x += other.x
       self.y += other.y
       self.theta += other.theta
-    elif other.shape == (1,3):
+    elif isinstance(other, np.ndarray) and other.shape == (1,3):
       self.x += other[0, 0]
       self.y += other[0, 1]
       self.theta += other[0, 2]
     else:
-      raise NotImplementedError, ERR.CANT_ADD_POSE(a)
+      raise NotImplementedError, ERR.CANT_ADD_POSE(other)
     self.theta = wrap_angle(self.theta)
     return self
 
