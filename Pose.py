@@ -16,6 +16,12 @@ class Pose(object):
 
   def updateHolonomic(self, action, dt):
     self += (action * dt * Pose.M(self.theta))
+
+  def todict(self):
+    return {'x':self.x, 'y':self.y, 'theta':self.theta}
+
+  def tolist(self):
+    return [self.x, self.y, self.theta]
       
   def __add__(self, other):
     if isinstance(other, Pose):
@@ -34,7 +40,7 @@ class Pose(object):
     dx = self.x - other.x
     dy = self.y - other.y
     dtheta = wrap_angle(self.theta - other.theta)
-    return np.matrix([dx, dy, dtheta])
+    return [dx, dy, dtheta]
 
   def __iter__(self):
     return iter([self.x, self.y, self.theta])
