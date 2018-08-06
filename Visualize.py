@@ -1,10 +1,11 @@
-import matplotlib.pyplot as plt
-from threading import Thread
-from Environment import PointEnvironment
-from Agent import Agent
-from Pose import Pose
 import numpy as np
+from threading import Thread
+import matplotlib.pyplot as plt
 import matplotlib.animation as animation
+
+from Pose import Pose
+from Agent import Agent
+from Environment import PointEnvironment
 
 class Visualizer:
   def __init__(self, env, tailLength=5, speedup=1):
@@ -21,7 +22,8 @@ class Visualizer:
     self.fig = plt.figure(figsize=(8, 8))
     self.ax = plt.subplot(111, frameon=False)
     self.clear()
-    anim = animation.FuncAnimation(self.fig, Visualizer.updater, interval=env.iterations*env.dt*1000/self.speedup, fargs=(self,))
+    anim = animation.FuncAnimation(self.fig, Visualizer.updater, \
+      interval=env.iterations*env.dt*1000/self.speedup, fargs=(self,))
     plt.show()
 
   @staticmethod
