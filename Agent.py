@@ -49,7 +49,7 @@ class Agent:
 class Trajectory:
   def __init__(self, maxlen=None, data=[]):
     self.maxlen = maxlen
-    self.data = data
+    self.data = data[:]
   
   def append(self, item):
     self.data.append(item)
