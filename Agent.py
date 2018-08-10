@@ -3,7 +3,7 @@ import Errors as ERR
 import numpy as np
 from collections import deque
 
-class Agent:
+class Agent(object):
   def __init__(self, id, pose=Pose(), defaultPose=False, collisionRadius=0.15, lenTrajectory=100):
     assert defaultPose == False or isinstance(defaultPose, Pose), ERR.TYPE_MISMATCH(defaultPose, Pose)
     self.type           = "AGENT"
@@ -15,10 +15,10 @@ class Agent:
 
   def reset(self, pose=False):
     self.prevActions    = []
-    self.trajectory     = Trajectory(maxlen=self.lenTrajectory)
     assert pose == False or isinstance(pose, Pose), ERR.BAD_RESET_POSE(pose)
     self.pose = pose if pose else self.defaultPose
-    
+    self.trajectory     = Trajectory(maxlen=self.lenTrajectory, data=[self.pose.tolist()])
+
   def step(self, action, dt=0.01):
     action = np.matrix(action)
     if action.any():
@@ -50,7 +50,7 @@ class Trajectory:
   def __init__(self, maxlen=None, data=[]):
     self.maxlen = maxlen
     self.data = data[:]
-  
+
   def append(self, item):
     self.data.append(item)
     if self.maxlen and len(self.data) > self.maxlen:
@@ -73,10 +73,10 @@ class Trajectory:
   # def __init__(self):
   #   self.edgeNetworks   = {}
   #   self.controller     = None
-  
+
   # def addController(self, network):
   #   self.controller = network
-    
+
   # def addEdgeNetwork(self, id, network):
   #   self.edgeNetworks[id] = network
 
