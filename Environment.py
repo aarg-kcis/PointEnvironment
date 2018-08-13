@@ -52,7 +52,7 @@ class PointEnvironment(object):
       for j in self.agents.values():
         if i.id >= j.id:
           continue
-        if i.distanceFrom(j) <= 1.05*(i.collsionRadius+j.collsionRadius):
+        if i.distanceFrom(j) <= 1.05*(i.collisionRadius+j.collisionRadius):
           print ERR.COLLISION(i.id, j.id)
           return True
     return False
