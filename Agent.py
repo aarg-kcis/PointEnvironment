@@ -1,3 +1,4 @@
+import copy
 from Pose import Pose
 import Errors as ERR
 import numpy as np
@@ -8,15 +9,15 @@ class Agent(object):
     assert defaultPose == False or isinstance(defaultPose, Pose), ERR.TYPE_MISMATCH(defaultPose, Pose)
     self.type           = "AGENT"
     self.id             = id
-    self.defaultPose    = defaultPose if defaultPose else pose
-    self.collsionRadius = collisionRadius
+    self.defaultPose    = defaultPose if defaultPose else copy.deepcopy(pose)
+    self.collisionRadius= collisionRadius
     self.lenTrajectory  = lenTrajectory
     self.reset(pose)
 
   def reset(self, pose=False):
     self.prevActions    = []
     assert pose == False or isinstance(pose, Pose), ERR.BAD_RESET_POSE(pose)
-    self.pose = pose if pose else self.defaultPose
+    self.pose = pose if pose else copy.deepcopy(self.defaultPose)
     self.trajectory     = Trajectory(maxlen=self.lenTrajectory, data=[self.pose.tolist()])
 
   def step(self, action, dt=0.01):
