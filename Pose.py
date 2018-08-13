@@ -3,7 +3,7 @@ import Errors as ERR
 from Utils import wrap_angle
 
 class Pose(object):
-  
+
   M = staticmethod(lambda x: np.matrix([[np.cos(x), np.sin(x), 0],[0, 0, 1]]))
 
   def __init__(self, x=0, y=0, t=0):
@@ -22,7 +22,7 @@ class Pose(object):
 
   def tolist(self):
     return [self.x, self.y, self.theta]
-      
+
   def __add__(self, other):
     if isinstance(other, Pose):
       x = self.x + other.x
