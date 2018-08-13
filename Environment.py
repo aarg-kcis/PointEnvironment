@@ -4,10 +4,10 @@ from Agent import Agent
 from Pose import Pose
 
 class PointEnvironment(object):
-  def __init__(self, num_iterations=100, dt=0.01, agents={}):
+  def __init__(self, num_iterations=100, dt=0.01, agents=[]):
     self.iterations = num_iterations
     self.dt         = dt
-    self.agents     = agents
+    self.agents     = {}
     self.num_agents = 0
     self.addAgents(agents)
     self.reset()
