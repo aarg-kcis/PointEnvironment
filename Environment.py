@@ -3,7 +3,7 @@ import Errors as ERR
 from Agent import Agent
 from Pose import Pose
 
-class PointEnvironment:
+class PointEnvironment(object):
   def __init__(self, num_iterations=100, dt=0.01, agents={}):
     self.iterations = num_iterations
     self.dt         = dt
@@ -56,3 +56,10 @@ class PointEnvironment:
           print ERR.COLLISION(i.id, j.id)
           return True
     return False
+
+  def pauseForVisualizer(self):
+    if self.attachedToVisualizer:
+      while self.waitingforVisualizer:
+        print "waitingforVisualizer", self.waitingforVisualizer
+        pass
+
