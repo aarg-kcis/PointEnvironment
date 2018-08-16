@@ -41,7 +41,7 @@ class Agent(object):
 
   def __str__(self):
     info = "{} {}:\n-Pose: {}\n-Default Pose: {}\n-Collision Radius: {}\n".\
-            format(self.type, self.id, self.pose, self.defaultPose, self.collsionRadius)
+            format(self.type, self.id, self.pose, self.defaultPose, self.collisionRadius)
     return info+"\n"+"-"*10
 
   def __repr__(self):

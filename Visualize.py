@@ -42,8 +42,8 @@ class Visualizer:
 
   def clear(self):
     self.ax.clear()
-    # self.ax.axis('equal', auto_scale=False)
-    self.ax.axis([-6,6,-6,6])
+    # self.ax.axis('equal', auto_scale=True)
+    # self.ax.axis([-6,6,-6,6])
     self.ax.set_aspect(1)
     # self.ax.set_xticks([])
     # self.ax.set_yticks([])
@@ -55,28 +55,28 @@ class Visualizer:
     self.isdone = False
     self.clear()
     # self.ax.grid()
-    circles = []
-    for _id, agent in self.agents.items():
-      self.trajectories[_id].append(agent.pose.tolist()[:-1])
-    for _id, a_t in self.trajectories.items():
-      agentrad = self.agents[_id].collisionRadius/self.tailLength
-      for i, x in enumerate(a_t):
-        c = self.colors[_id]
-        self.ax.add_artist(plt.Circle(x, radius=agentrad*(i+1), color=c))
-      # circles += [plt.Circle(x, radius=.3, color='r') for i, x in enumerate(a_t)]
-    # self.ax.add_collection(PatchCollection(circles))
-    return
-    # x, y, c, s = [], [], [], []
-    # for agent in self.agents.values():
-    #   self.trajectories[agent.id].append(agent.pose.tolist())
+    # circles = []
+    # for _id, agent in self.agents.items():
+    #   self.trajectories[_id].append(agent.pose.tolist()[:-1])
     # for _id, a_t in self.trajectories.items():
-    #   x += [i[0] for i in a_t]
-    #   y += [i[1] for i in a_t]
-    #   c += [self.colors[_id]]*len(a_t)
-    #   s += [self.agents[_id].collisionRadius*1000/(2**i) for i in xrange(len(a_t))][::-1]
-    # self.ax.set_title("Iter: {}".format(self.frame_idx))
-    # self.isdone = True
-    # self.frame_idx += 1
+    #   agentrad = self.agents[_id].collisionRadius/self.tailLength
+    #   for i, x in enumerate(a_t):
+    #     c = self.colors[_id]
+    #     self.ax.add_artist(plt.Circle(x, radius=agentrad*(i+1), color=c))
+    #   # circles += [plt.Circle(x, radius=.3, color='r') for i, x in enumerate(a_t)]
+    # # self.ax.add_collection(PatchCollection(circles))
+    # return
+    x, y, c, s = [], [], [], []
+    for agent in self.agents.values():
+      self.trajectories[agent.id].append(agent.pose.tolist())
+    for _id, a_t in self.trajectories.items():
+      x += [i[0] for i in a_t]
+      y += [i[1] for i in a_t]
+      c += [self.colors[_id]]*len(a_t)
+      s += [self.agents[_id].collisionRadius*1000/(2**i) for i in xrange(len(a_t))][::-1]
+    self.ax.set_title("Iter: {}".format(self.frame_idx))
+    self.isdone = True
+    self.frame_idx += 1
     return plt.scatter(x, y, c=c, s=s)
 
   def updateLimits(self, min_x, max_x, min_y, max_y):
