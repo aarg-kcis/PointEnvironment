@@ -56,10 +56,3 @@ class PointEnvironment(object):
           print ERR.COLLISION(i.id, j.id)
           return True
     return False
-
-  def pauseForVisualizer(self):
-    if self.attachedToVisualizer:
-      while self.waitingforVisualizer:
-        print "waitingforVisualizer", self.waitingforVisualizer
-        pass
-
