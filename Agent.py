@@ -68,26 +68,3 @@ class Trajectory:
 
   def __len__(self):
     return len(self.data)
-
-
-"""Should go in RLAgent Class"""
-  # def __init__(self):
-  #   self.edgeNetworks   = {}
-  #   self.controller     = None
-
-  # def addController(self, network):
-  #   self.controller = network
-
-  # def addEdgeNetwork(self, id, network):
-  #   self.edgeNetworks[id] = network
-
-  # def act(self, observations):
-  #   self.prevAction = np.matrix([0, 0])
-  #   if controller is not None:
-  #     self.prevAction = self.controller.act(observations)
-  #   elif self.edgeNetworks:
-  #     for idx, obs in observations:
-  #       self.prevAction += self.edgeNetworks.act(observations[idx])
-  #   else:
-  #     raise NotImplementedError, 'Agents must have edge network(s)'
-  #   return self.prevAction
