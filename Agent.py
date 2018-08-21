@@ -2,23 +2,21 @@ import copy
 from Pose import Pose
 import Errors as ERR
 import numpy as np
-from collections import deque
 
 class Agent(object):
-  def __init__(self, id, pose=Pose(), defaultPose=False, collisionRadius=0.15, lenTrajectory=100):
+  def __init__(self, id, pose=Pose(), defaultPose=False, collisionRadius=0.15):
     assert defaultPose == False or isinstance(defaultPose, Pose), ERR.TYPE_MISMATCH(defaultPose, Pose)
     self.type           = "AGENT"
     self.id             = id
     self.defaultPose    = defaultPose if defaultPose else copy.deepcopy(pose)
     self.collisionRadius= collisionRadius
-    self.lenTrajectory  = lenTrajectory
     self.reset(pose)
 
   def reset(self, pose=False):
     self.prevActions    = []
     assert pose == False or isinstance(pose, Pose), ERR.BAD_RESET_POSE(pose)
     self.pose = pose if pose else copy.deepcopy(self.defaultPose)
-    self.trajectory     = Trajectory(maxlen=self.lenTrajectory, data=[self.pose.tolist()])
+    self.trajectory     = Trajectory(initdata=[self.pose.tolist()])
 
   def step(self, action, dt=0.01):
     action = np.matrix(action)
@@ -48,14 +46,18 @@ class Agent(object):
     return self.type + " {}".format(self.id)
 
 class Trajectory:
-  def __init__(self, maxlen=None, data=[]):
-    self.maxlen = maxlen
-    self.data = data[:]
+  def __init__(self, initdata=None):
+    self.data = []
+    if initdata != None:
+      self.data = initdata[:]
 
   def append(self, item):
     self.data.append(item)
-    if self.maxlen and len(self.data) > self.maxlen:
-      self.data.pop(0)
+
+  def getEarliest(self):
+    if len(self) == 1:
+      return self.data[0]
+    return self.data.pop(0)
 
   def __getitem__(self, index):
     return self.data[index]
