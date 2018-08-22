@@ -4,12 +4,14 @@ import Errors as ERR
 import numpy as np
 
 class Agent(object):
-  def __init__(self, id, pose=Pose(), defaultPose=False, collisionRadius=0.15):
+  def __init__(self, id, pose=None, defaultPose=False, collisionRadius=0.15):
     assert defaultPose == False or isinstance(defaultPose, Pose), ERR.TYPE_MISMATCH(defaultPose, Pose)
     self.type           = "AGENT"
     self.id             = id
     self.defaultPose    = defaultPose if defaultPose else copy.deepcopy(pose)
     self.collisionRadius= collisionRadius
+    if pose == None:
+      pose = Pose()
     self.reset(pose)
 
   def reset(self, pose=False):
