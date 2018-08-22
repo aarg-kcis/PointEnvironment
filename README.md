@@ -49,6 +49,7 @@ To integrate it in your existing code follow these steps:
    # some random loop
    for i in range(100):
      # This is the method to call...
+     # step takes a dict containing agent id and respective values for action [v, w]
      env.step({k:[0.4*(k+1), 0.2*(k+1)] for k in range(2)})
      # step method takes a dict as input for the following form:
      # {agent_id : [linear_velocity, angular_velocity]}
