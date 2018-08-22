@@ -5,14 +5,14 @@ from Agent import Agent
 from Visualize import Visualizer
 
 class PointEnvironment(object):
-  def __init__(self, num_iterations=100, dt=0.01, agents=None, visualise=False, visualiseOptions={}):
+  def __init__(self, num_iterations=100, dt=0.01, agents=None, visualize=False, visualOptions={}):
     self.iterations = num_iterations
     self.dt         = dt
     self.agents     = {}
     self.num_agents = 0
-    self.visualise  = visualise
-    self.v_options  = visualiseOptions
-    self.initVisualiser()
+    self.visualize  = visualize
+    self.v_options  = visualOptions
+    self.initVisualizer()
     self.addAgents(agents)
     self.reset()
 
@@ -21,7 +21,7 @@ class PointEnvironment(object):
     assert agent.isUnique(self.agents.values()), ERR.AGENT_NOT_UNIQUE(agent)
     self.agents[agent.id] = agent
     self.num_agents += 1
-    if self.visualise:
+    if self.visualize:
       self.visual.flush()
 
   def addAgents(self, agents):
@@ -29,14 +29,18 @@ class PointEnvironment(object):
     for i in agents:
       self.addAgent(i)
 
-  def initVisualiser(self):
-    assert type(self.visualise) == bool
-    if self.visualise:
+  def initVisualizer(self):
+    assert type(self.visualize) == bool
+    if self.visualize:
       self.visual = Visualizer(self, **self.v_options)
+
+  def startVisualiser(self):
+    assert self.visualize
+    self.visual.thread.start()
 
   def reset(self, poses={}):
     self.collisionOccured = False
-    if self.visualise:
+    if self.visualize:
       self.visual.flush()
     assert type(poses) == dict, ERR.TYPE_MISMATCH(poses, dict)
     for i in self.agents.values():
@@ -47,7 +51,7 @@ class PointEnvironment(object):
         i.reset()
 
   def step(self, actions):
-    if self.visualise:
+    if self.visualize:
       while not self.visual.isdone:
         pass
     assert type(actions) == dict
@@ -63,7 +67,7 @@ class PointEnvironment(object):
         break
     for i in self.agents.values():
       i.updateTrajectory()
-    if self.visualise:
+    if self.visualize:
       self.visual.isdone = False
 
   def _collisionOccured(self):
