@@ -44,7 +44,6 @@ class Visualizer:
   def clear(self):
     self.ax.clear()
     self.ax.set_aspect(1)
-    # self.ax.axis('equal')
     if self.bounds != None:
       assert type(self.bounds) == list and len(self.bounds) == 4
       self.ax.axis(self.bounds)
@@ -65,6 +64,4 @@ class Visualizer:
         self.ax.add_artist(plt.Circle(x, radius=agentrad*(i+1), color=c))
     self.ax.set_title("Iter: {}".format(frame))
     self.isdone = True
-    # print self.ax.__dict__
-    # print "*"*80
     return self.ax.artists
