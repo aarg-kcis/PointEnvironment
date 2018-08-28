@@ -21,6 +21,8 @@ To integrate it in your existing code follow these steps:
  - Create an PointEnvironment instance
    ```python
    from PointEnvironment.Environment import PointEnvironment
+   from PointEnvironment.Agent import Agent
+   from PointEnvironment.Pose import Pose
    visualOptions = { 'tailLength' : 4, # tail of agent's trajectory
                      'speedup' : 1, # realTime/simTime
                      'bounds': [-10,10,-10,10]# bounds of the environment [xmin, xmax, ymin, ymax]
