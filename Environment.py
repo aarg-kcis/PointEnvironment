@@ -5,11 +5,13 @@ from Agent import Agent
 from Visualize import Visualizer
 
 class PointEnvironment(object):
-  def __init__(self, num_iterations=100, dt=0.01, agents=None, visualize=False, visualOptions={}):
+  def __init__(self, mode, num_iterations=100, dt=0.01, agents=None, \
+               visualize=False, visualOptions={}):
     self.iterations = num_iterations
     self.dt         = dt
     self.agents     = {}
     self.num_agents = 0
+    self.updatetype = mode
     self.visualize  = visualize
     self.v_options  = visualOptions
     self.initVisualizer()
@@ -50,10 +52,18 @@ class PointEnvironment(object):
         print ERR.RESET_POSE_MISSING(i.id)
         i.reset()
 
-  def step(self, actions):
+  def step(self, args):
     if self.visualize:
       while not self.visual.isdone:
         pass
+    if self.updatetype == 'action':
+      self._stepUsingActions(args)
+    elif self.updatetype == 'pose':
+      self._stepUsingPoseUpdate(args)
+    if self.visualize:
+      self.visual.isdone = False
+
+  def _stepUsingActions(self, actions):
     assert type(actions) == dict
     actions = {k: np.matrix(v) for k,v in actions.items()}
     for i in xrange(self.iterations):
@@ -62,13 +72,20 @@ class PointEnvironment(object):
           agent.step(actions[agent.id], self.dt)
         except KeyError:
           pass
-      if ((i+1) % 50) == 0 and self.num_agents > 1 and self._collisionOccured():
+      if ((i) % 50) == 0 and self.num_agents > 1 and self._collisionOccured():
         self.collisionOccured = True
         break
     for i in self.agents.values():
       i.updateTrajectory()
-    if self.visualize:
-      self.visual.isdone = False
+
+  def _stepUsingPoseUpdate(self, poses):
+    assert type(poses) == dict
+    for agent in self.agents.values():
+      try:
+        agent.poseUpdate(poses[agent.id])
+        agent.updateTrajectory()
+      except:
+        pass
 
   def _collisionOccured(self):
     for i in self.agents.values():

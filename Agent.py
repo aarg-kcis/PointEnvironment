@@ -25,6 +25,9 @@ class Agent(object):
     if action.any():
       self.pose.updateHolonomic(action, dt)
 
+  def poseUpdate(self, pose):
+    self.pose.updateManually(pose)
+
   def updateTrajectory(self):
     self.trajectory.append(self.pose.tolist())
 

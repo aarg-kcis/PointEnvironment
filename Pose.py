@@ -17,6 +17,13 @@ class Pose(object):
   def updateHolonomic(self, action, dt):
     self += (action * dt * Pose.M(self.theta))
 
+  def updateManually(self, pose):
+    assert type(pose) == list or isinstance(pose, Pose), pose
+    isposePose = isinstance(pose, Pose)
+    self.x = pose.x if isposePose else pose[0]
+    self.y = pose.y if isposePose else pose[1] if len(pose) > 1 else 0
+    self.theta = pose.theta if isposePose else pose[2] if len(pose) > 2 else 0
+
   def todict(self):
     return {'x':self.x, 'y':self.y, 'theta':self.theta}
 
