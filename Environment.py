@@ -11,7 +11,7 @@ class PointEnvironment(object):
     self.agents     = {}
     self.num_agents = 0
     self.visualize  = visualize
-    self.v_options  = visualizeOptions
+    self.v_options  = visualOptions
     self.initVisualizer()
     self.addAgents(agents)
     self.reset()
@@ -65,6 +65,10 @@ class PointEnvironment(object):
       i.updateTrajectory()
     if self.visualize:
       self.visual.isdone = False
+
+  def startVisualizer(self):
+    assert self.visualize
+    self.visual.thread.start()
 
   def _collisionOccured(self):
     for i in self.agents.values():
