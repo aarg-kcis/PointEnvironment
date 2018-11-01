@@ -5,8 +5,8 @@ import matplotlib.pyplot as plt
 import matplotlib.animation as animation
 from matplotlib.collections import PatchCollection
 
-from Pose import Pose
-from Agent import Agent, Trajectory
+from PointEnvironment.Pose import Pose
+from PointEnvironment.Agent import Agent, Trajectory
 
 class Visualizer:
   def __init__(self, env, tailLength=5, speedup=1, bounds=None):

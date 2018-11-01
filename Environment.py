@@ -1,8 +1,8 @@
 import numpy as np
-import Errors as ERR
-from Pose import Pose
-from Agent import Agent
-from Visualize import Visualizer
+import PointEnvironment.Errors as ERR
+from PointEnvironment.Pose import Pose
+from PointEnvironment.Agent import Agent
+from PointEnvironment.Visualize import Visualizer
 
 class PointEnvironment(object):
   def __init__(self, num_iterations=100, dt=0.01, agents=None, visualise=False, visualiseOptions={}):

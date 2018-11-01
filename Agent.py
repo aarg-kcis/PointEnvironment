@@ -1,6 +1,6 @@
 import copy
-from Pose import Pose
-import Errors as ERR
+from PointEnvironment.Pose import Pose
+import PointEnvironment.Errors as ERR
 import numpy as np
 
 class Agent(object):

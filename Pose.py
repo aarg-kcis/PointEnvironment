@@ -1,6 +1,6 @@
 import numpy as np
-import Errors as ERR
-from Utils import wrap_angle
+import PointEnvironment.Errors as ERR
+from PointEnvironment.Utils import wrap_angle
 
 class Pose(object):
 
