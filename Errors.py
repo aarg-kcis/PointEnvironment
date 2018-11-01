@@ -1,3 +1,4 @@
+
 PROVIDE_SHAPE_INSTANCE = "shape should be an instance of <class Shape>"
 DESCRIPTION_INVALID = "Error in generating description from JSON"
 N_STATES_MISMATCH = "Number of state entries must be equal to N_AGENTS C 2"

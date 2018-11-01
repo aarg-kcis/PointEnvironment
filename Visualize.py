@@ -37,7 +37,7 @@ class Visualizer:
 
   def flush(self):
     self.trajectories = {}
-    print self.env.agents
+    print(self.env.agents)
     for _id in self.env.agents.keys():
       self.trajectories[_id] = deque(maxlen=self.tailLength)
 

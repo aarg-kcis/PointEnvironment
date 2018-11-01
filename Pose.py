@@ -33,7 +33,7 @@ class Pose(object):
       y = self.y + other[0][1]
       theta = wrap_angle(self.theta + other[0][2])
     else:
-      raise NotImplementedError, ERR.CANT_ADD_POSE(a)
+      raise NotImplementedError(ERR.CANT_ADD_POSE(a))
     return Pose(x, y, theta)
 
   def __sub__(self, other):
@@ -55,7 +55,7 @@ class Pose(object):
       self.y += other[0, 1]
       self.theta += other[0, 2]
     else:
-      raise NotImplementedError, ERR.CANT_ADD_POSE(other)
+      raise NotImplementedError(ERR.CANT_ADD_POSE(other))
     self.theta = wrap_angle(self.theta)
     return self
 

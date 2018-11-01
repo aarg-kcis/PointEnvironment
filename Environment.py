@@ -43,7 +43,7 @@ class PointEnvironment(object):
       try:
         i.reset(poses[i.id])
       except KeyError:
-        print ERR.RESET_POSE_MISSING(i.id)
+        print(ERR.RESET_POSE_MISSING(i.id))
         i.reset()
 
   def step(self, actions):
@@ -52,7 +52,7 @@ class PointEnvironment(object):
         pass
     assert type(actions) == dict
     actions = {k: np.matrix(v) for k,v in actions.items()}
-    for i in xrange(self.iterations):
+    for i in range(self.iterations):
       for agent in self.agents.values():
         try:
           agent.step(actions[agent.id], self.dt)
@@ -76,6 +76,6 @@ class PointEnvironment(object):
         if i.id >= j.id:
           continue
         if i.distanceFrom(j) <= 1.05*(i.collisionRadius+j.collisionRadius):
-          print ERR.COLLISION(i.id, j.id)
+          print(ERR.COLLISION(i.id, j.id))
           return True
     return False
