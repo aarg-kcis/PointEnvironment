@@ -5,7 +5,7 @@ from PointEnvironment.Agent import Agent
 from PointEnvironment.Visualize import Visualizer
 
 class PointEnvironment(object):
-  def __init__(self, num_iterations=100, dt=0.01, agents=None, visualize=False, visualizeOptions={}):
+  def __init__(self, num_iterations=100, dt=0.01, agents=None, visualize=False, visualOptions={}):
     self.iterations = num_iterations
     self.dt         = dt
     self.agents     = {}
