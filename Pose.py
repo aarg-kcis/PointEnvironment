@@ -40,7 +40,7 @@ class Pose(object):
     dx = self.x - other.x
     dy = self.y - other.y
     dtheta = wrap_angle(self.theta - other.theta)
-    return [dx, dy, dtheta]
+    return np.array([dx, dy, dtheta])
 
   def __iter__(self):
     return iter([self.x, self.y, self.theta])
