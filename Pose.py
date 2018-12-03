@@ -67,3 +67,17 @@ class Pose(object):
 
   def __nonzero__(self):
     return True
+
+  def transform_pose(self, pose):
+    # Return the pose with respect to this pose's reference frame.
+    # Assumes the pose is in world frame
+    if type(pose) == list:
+      pose = Pose(*pose)
+    assert type(pose) == Pose
+    H = lambda a, b, c: np.matrix([[np.cos(c), np.sin(c), 0, a],
+                                   [-np.sin(c), np.cos(c), 0, b],
+                                   [0, 0, 1, 0], [0, 0, 0, 1]])
+    transform = H(*pose.lolist())
+    transform[:3, :3] = transform[:3, :3].T
+    transform[:3, 3] = -transform[:3, :3]*transform[:3, 3]
+    return transform
