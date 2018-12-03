@@ -74,10 +74,6 @@ class Pose(object):
     if type(pose) == list:
       pose = Pose(*pose)
     assert type(pose) == Pose
-    H = lambda a, b, c: np.matrix([[np.cos(c), np.sin(c), 0, a],
-                                   [-np.sin(c), np.cos(c), 0, b],
-                                   [0, 0, 1, 0], [0, 0, 0, 1]])
-    transform = H(*pose.lolist())
-    transform[:3, :3] = transform[:3, :3].T
-    transform[:3, 3] = -transform[:3, :3]*transform[:3, 3]
-    return transform
+    Rt = np.matrix([[np.cos(self.theta), -np.sin(self.theta), 0],
+                    [np.sin(self.theta), np.cos(self.theta), 0], [0, 0, 1]])
+    
