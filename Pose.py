@@ -83,3 +83,9 @@ class Pose(object):
         v1 = np.matrix(pose[:2]+[0, 1])
         v2 = np.matrix([self.x + cos(pose[-1]), self.y + sin(pose[-1]), 0, 1])
         return (h*v1.T).T.tolist()[0], (h*v2.T).T.tolist()[0]
+
+    def getPoseFromFrame(self, pose):
+        if type(pose) != Pose:
+            pose = Pose(*pose)
+        return pose.getPoseInMyFrame(self.tolist())
+
