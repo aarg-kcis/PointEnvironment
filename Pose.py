@@ -70,7 +70,7 @@ class Pose(object):
     def __nonzero__(self):
         return True
 
-    def getPoseInMyFrame(self, pose):
+    def getPoseInFrame(self, pose):
         # Return the pose with respect to this pose's reference frame.
         # Assumes the pose is in world frame
         if type(pose) == Pose:
