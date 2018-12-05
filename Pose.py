@@ -75,17 +75,17 @@ class Pose(object):
         # Assumes the pose is in world frame
         if type(pose) == Pose:
             pose = pose.tolist()
-        assert type(pose) == list and len(pose) == 3
+        assert type(pose) == list and len(pose) == 3, type(pose)
         c, s = cos(self.theta), sin(self.theta)
         d = np.matrix([self.x, self.y, 0]).T
         r = np.matrix([[c, s, 0], [-s, c, 0], [0, 0, 1]])
         h = np.vstack([np.hstack([r, -r*d]), [[0, 0, 0, 1]]])
         v1 = np.matrix(pose[:2]+[0, 1])
         v2 = np.matrix([self.x + cos(pose[-1]), self.y + sin(pose[-1]), 0, 1])
-        return (h*v1.T).T.tolist()[0], (h*v2.T).T.tolist()[0]
+        return (h*v1.T).T.tolist()[0][:-2], (h*v2.T).T.tolist()[0][:-2]
 
     def getPoseFromFrame(self, pose):
         if type(pose) != Pose:
             pose = Pose(*pose)
-        return pose.getPoseInMyFrame(self.tolist())
+        return pose.getPoseInFrame(self.tolist())
 
