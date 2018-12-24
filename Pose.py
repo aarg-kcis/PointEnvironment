@@ -25,6 +25,9 @@ class Pose(object):
     def tolist(self):
         return [self.x, self.y, self.theta]
 
+    def toarr(self):
+        return np.array(self.tolist())
+
     def __add__(self, other):
         if isinstance(other, Pose):
             x = self.x + other.x
@@ -65,7 +68,7 @@ class Pose(object):
         return self.__repr__()
 
     def __repr__(self):
-        return "[X: {} Y: {} TH: {}]".format(self.x, self.y, self.theta)
+        return "[X: {} Y: {} TH: {}]".format(self.x, self.y, np.degrees(self.theta))
 
     def __nonzero__(self):
         return True
