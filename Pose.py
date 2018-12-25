@@ -1,5 +1,6 @@
 import numpy as np
 from numpy import sin, cos
+from numpy.linalg import norm
 import PointEnvironment.Errors as ERR
 from PointEnvironment.Utils import wrap_angle
 
@@ -7,6 +8,7 @@ from PointEnvironment.Utils import wrap_angle
 class Pose(object):
 
     M = staticmethod(lambda x: np.matrix([[cos(x), sin(x), 0], [0, 0, 1]]))
+    dist = staticmethod(lambda x, y: norm(x.toarr()[:-1] - y.toarr()[:-1]))
 
     def __init__(self, x=0, y=0, t=0):
         self.reset(x, y, t)
